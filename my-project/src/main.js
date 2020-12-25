@@ -4,9 +4,11 @@ import Vuex from '../vuex/index'
 
 Vue.config.productionTip = false
 
+Vue.use(Vuex)
+
 let store = new Vuex.Store({
   state: {
-    count: 0
+    count: 520
   },
   getters: {
     getStateCount(state) {
@@ -14,9 +16,14 @@ let store = new Vuex.Store({
     }
   },
   actions: {
-    subAction(context) {
+    subAction(context, payload) { //context = {commint,dispatch}
       context.commit('sub')
-    }
+    },
+    asyncSub(context, payload) { //context = {commint,dispatch}
+      setTimeout(() => {
+        context.commit('sub')
+      }, 1000);
+    },
   },
   mutations: {
     add(state) {
@@ -24,11 +31,12 @@ let store = new Vuex.Store({
     },
     sub(state) {
       state.count = state.count - 1
-    }
+    },
   }
 }, Vue)
 
 new Vue({
+  name: "root",
   store,
   render: h => h(App),
 }).$mount('#app')

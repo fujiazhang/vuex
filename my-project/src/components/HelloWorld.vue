@@ -3,6 +3,7 @@
     <h1>welcome,num is {{ count }}</h1>
     <button @click="add">+1</button>
     <button @click="sub">-1</button>
+    <button @click="_asyncSub">异步-1</button>
   </div>
 </template>
 
@@ -18,8 +19,8 @@ export default {
     },
   },
   created() {
-    this.num = this.$store.state.count;
-    console.log("输出this.$store.state", this.$store.state);
+    // this.num = this.$store.state.count;
+    // console.log("输出this.$store.state", this.$store.state);
     console.log(
       "输出this.$store.getters.getStateCount",
       this.$store.getters.getStateCount
@@ -28,11 +29,14 @@ export default {
   methods: {
     add() {
       this.$store.commit("add");
-      console.log("commit add:", this.$store.getters.getStateCount);
+      console.log("commit add reslut:", this.$store.getters.getStateCount);
     },
     sub() {
       this.$store.dispatch("subAction");
       console.log("store dispatch sub", this.$store.state.count);
+    },
+    _asyncSub() {
+      this.$store.dispatch("asyncSub");
     },
   },
 };
